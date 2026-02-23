@@ -21,6 +21,8 @@ homemade sprites.
   - Child level: head and tail are animated using local rotations (head nod + tail wag), while the whole animal bounces vertically.
 - Two instances are animated differently (different start positions and movement speeds), so they appear unique.
 
+3) SkyAnimal (Samantha)
+- She was not able to complete her portion as she dropped the course.
 
 
 ANIMATION DETAILS (WHAT MOVES)
@@ -36,7 +38,7 @@ UNEXPECTED CHALLENGES
 WHO DID WHAT
 - Cosmo: background + SwimmingAnimal class + integration of swimming animals into the scene.
 - Zaviyan: GroundAnimal class (monkeys), monkey textures, integration into Game1.
-- Samantha: 
+- Samantha: She was not able to complete her portion as she dropped the course.
 
 HOW TO RUN
 Open the solution file in Rider/Visual Studio and run the project:
