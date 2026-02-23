@@ -16,6 +16,12 @@ public class Game1 : Game
     private Texture2D _leg;
     private SwimmingAnimal _myFish;
     private SwimmingAnimal _myCroco;
+    private Texture2D _monkeyBody;
+    private Texture2D _monkeyFace;
+    private Texture2D _monkeyTail;
+
+    private GroundAnimal _monkey1;
+    private GroundAnimal _monkey2;
     
     public Game1()
     {
@@ -39,6 +45,14 @@ public class Game1 : Game
         _fin = Content.Load<Texture2D>("images/fish_fin2");
         _croco = Content.Load<Texture2D>("images/newcroco2");
         _leg = Content.Load<Texture2D>("images/croco_paw");
+        
+        _monkeyBody = Content.Load<Texture2D>("images/monkey_body");
+        _monkeyFace = Content.Load<Texture2D>("images/monkey_face");
+        _monkeyTail = Content.Load<Texture2D>("images/monkey_tail");
+
+        _monkey1 = new GroundAnimal(_monkeyBody, _monkeyFace, _monkeyTail, new Vector2(0, 380), 120f);
+        _monkey2 = new GroundAnimal(_monkeyBody, _monkeyFace, _monkeyTail, new Vector2(-250, 420), 90f);
+
 
         _myFish = new SwimmingAnimal(_fish, _fin, new Vector2(100, 250), 2.0f);
 
@@ -83,8 +97,11 @@ public class Game1 : Game
         {
             _myCroco.Update(gameTime, screenWidth);
         }
+        
 
         // TODO: Add your update logic here
+        _monkey1?.Update(gameTime, _graphics.PreferredBackBufferWidth);
+        _monkey2?.Update(gameTime, _graphics.PreferredBackBufferWidth);
 
         base.Update(gameTime);
     }
@@ -93,27 +110,21 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
-        _spriteBatch.Begin();
         if (_scene != null)
         {
+            _spriteBatch.Begin();
             _spriteBatch.Draw(_scene, new Rectangle(0, 0,
                 _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight), Color.White);
-        }
-        _spriteBatch.End();
-        if (_myFish != null)
-        {
-            _myFish.Draw(_spriteBatch);
-        }
-    
-        if (_myCroco != null)
-        {
-            _myCroco.Draw(_spriteBatch);
+            _spriteBatch.End();
         }
 
-        
+        _myFish?.Draw(_spriteBatch);
+        _myCroco?.Draw(_spriteBatch);
+        _monkey1?.Draw(_spriteBatch);
+        _monkey2?.Draw(_spriteBatch);
 
         base.Draw(gameTime);
     }
+
 }
