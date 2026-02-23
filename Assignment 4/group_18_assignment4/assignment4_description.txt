@@ -7,7 +7,12 @@ Our animation depicts a simple biome scene with multiple animated animals moving
 CLASSES / OBJECTS INCLUDED
 
 1) SwimmingAnimal (Cosmo)
-- 
+- Represents an aquatic animal built from the body and appendages
+-Uses a two-level hierarchy:
+  -Root level: Matrix composed of scale + translation + periodic function (sine) to move the animal across the screen.
+  -Child level: the appendages are swinging back and forth while being fixed at an offset from the origin of the body.
+-Two instances are animated differently: one is a fish and the other is a crocodile, with both different appendages and 
+homemade sprites.
 
 2) GroundAnimal (Zaviyan)
 - Represents a ground animal (monkey) built from three textures: body, head/face, and tail.
