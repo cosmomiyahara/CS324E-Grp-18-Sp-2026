@@ -17,5 +17,5 @@ Group: Samantha, Cosmo, Zaviyan
 ### Contributions
 - Cosmo: background + swimming animals class/animation 
 - Zaviyan: GroundAnimal class (monkeys) + monkey textures 
-- Samantha: 
+- Samantha: Dropped the course.
 
