@@ -1,0 +1,39 @@
+CS 324E — Assignment 4: 2D Animation (Scene Hierarchies)
+Group 18
+
+OVERVIEW
+Our animation depicts a simple biome scene with multiple animated animals moving continuously. The scene loops indefinitely (objects wrap/restart when moving off-screen).
+
+CLASSES / OBJECTS INCLUDED
+
+1) SwimmingAnimal (Cosmo)
+- 
+
+2) GroundAnimal (Zaviyan)
+- Represents a ground animal (monkey) built from three textures: body, head/face, and tail.
+- Uses a two-level hierarchy:
+  - Root level: Matrix composed of Scale + Translation to move the monkey across the screen at a consistent size and position.
+  - Child level: head and tail are animated using local rotations (head nod + tail wag), while the whole animal bounces vertically.
+- Two instances are animated differently (different start positions and movement speeds), so they appear unique.
+
+
+
+ANIMATION DETAILS (WHAT MOVES)
+- Background is drawn each frame.
+- Swimming animals continuously move and animate their appendages.
+- Ground animals (monkeys) move left-to-right along the bottom of the screen, bounce up/down, and animate head/tail rotations.
+
+UNEXPECTED CHALLENGES
+- Content pipeline build required installing/configuring the mgcb tool so Content.mgcb assets would compile correctly.
+- SpriteBatch.Begin/End nesting issues occurred when some objects managed Begin/End internally while Game1 also used Begin/End. We resolved this by making the drawing style consistent (objects that use Begin/End keep it internal, and Game1 avoids nesting conflicts).
+- Minor tuning was needed for monkey attachment offsets to make the head align cleanly with the body.
+
+WHO DID WHAT
+- Cosmo: background + SwimmingAnimal class + integration of swimming animals into the scene.
+- Zaviyan: GroundAnimal class (monkeys), monkey textures, integration into Game1.
+- Samantha: 
+
+HOW TO RUN
+Open the solution file in Rider/Visual Studio and run the project:
+Assignment 4/group_18_assignment4/group_18_assignment4.sln
+
