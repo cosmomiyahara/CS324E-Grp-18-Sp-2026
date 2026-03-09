@@ -22,6 +22,8 @@ public class Game1 : Game
     private Model spaceshipModel;
     private Model thrusterModel;
     private Model center;
+    Model truckModel;
+    Truck truck;
     
 
 
@@ -65,6 +67,8 @@ public class Game1 : Game
         center = Content.Load<Model>("hangar_roundA");
         playerVehicle = new Vehicle(carModel, 12f, 0f, 1.5f, carTexture);
         spaceship = new Spaceship(spaceshipModel, thrusterModel, thrusterOffset);
+        truckModel = Content.Load<Model>("truck_vehicle");
+        truck = new Truck(truckModel);
     }
     private VertexPositionColor[] CreateTrack(int segments, float radius, float thickness, Color color)
     {
@@ -96,6 +100,7 @@ public class Game1 : Game
         // TODO: Add your update logic here
         playerVehicle.Update(gameTime);
         spaceship.Update(gameTime);
+        truck.Update(gameTime);
 
         double time = gameTime.TotalGameTime.TotalSeconds * 0.5f;
         float camX = (float)Math.Cos(time) * 50f;
@@ -131,6 +136,7 @@ public class Game1 : Game
         GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
         playerVehicle.Draw(view, projection);
         spaceship.Draw(view, projection);
+        truck.Draw(view, projection);
         
         
         
