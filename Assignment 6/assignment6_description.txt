@@ -1,0 +1,12 @@
+Assignment 6 Group 18
+Members: Cosmo Miyahara, Zaviyan Tharwani, Brady Backus
+
+Summary: This project simulates a jungle with birds flying around, rain falling, and vines tangling. The birds class handles the physics and the movement of birds as a flock. The Vine link class simulates a single vine and involves the spring force. The vines class completes the simulation by adding all the vine links together. 
+
+Cosmo made the bird simulation, consisting of back-and-forth horizontal movements and sinusoidal movements of the birds. The birds also avoid the vines. 
+
+Zaviyan made the rain simulation. You can toggle the rain on and off by pressing R.
+
+Brady drew the background and made the vines simulation. When clicking V, you can left-click and drag anywhere to set vines. When clicking V again, you will leave the vine-setting mode. You can still click on the vines and drag them. 
+
+We had challenges in making sure all of our simulations worked in unison. The project started with Brady. Then, Cosmo took over the code and implemented the birds. Finally, Zaviyan took over the code and implemented the rain simulation. 
