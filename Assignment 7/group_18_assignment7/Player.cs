@@ -135,6 +135,15 @@ public class Player : Entity
                 }
             }
         }
+        public Rectangle GetBounds()
+        {
+            return new Rectangle(
+                (int)Position.X - _currentFrame.Width / 2,
+                (int)Position.Y - _currentFrame.Height / 2,
+                _currentFrame.Width,
+                _currentFrame.Height
+            );
+        }
 
         public Bullet Shoot(Vector2 direction, Texture2D bulletTexture)
         {

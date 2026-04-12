@@ -19,6 +19,7 @@ public class Barrier
     private bool _adding = true;
     private BarrierPart _lastLink;
     private Player _player;
+    public List<BarrierPart> Parts => _parts;
 
     public Barrier(Texture2D barrierTexture, Vector2 startPos, float scale, Player player)
     {

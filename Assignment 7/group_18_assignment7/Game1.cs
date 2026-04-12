@@ -31,6 +31,13 @@ public class Game1 : Game
     private List<Barrier> _barriers;
     private Texture2D _barrierTexture;
     
+    //Z 
+    private List<Enemy> _enemies = new List<Enemy>();
+    private Texture2D _enemyTexture;
+    private Timer _enemySpawnTimer;
+    private int _score = 0;
+    
+    
 
     public Game1()
     {
@@ -45,6 +52,8 @@ public class Game1 : Game
         _timer = new Timer(-1f);
 
         base.Initialize();
+        _enemySpawnTimer = new Timer(2.0f);
+        
     }
 
     protected override void LoadContent()
@@ -59,6 +68,7 @@ public class Game1 : Game
         _barriers = new List<Barrier>();
 
         // TODO: use this.Content to load your game content here
+        _enemyTexture = Content.Load<Texture2D>("bullet");
     }
 
     protected override void Update(GameTime gameTime)
@@ -126,12 +136,94 @@ public class Game1 : Game
                 _bullets.RemoveAt(i);
             }
         }
+        for (int i = _bullets.Count - 1; i >= 0; i--)
+        {
+            for (int j = _enemies.Count - 1; j >= 0; j--)
+            {
+                if (_enemies[j].IsHitBy(_bullets[i]))
+                {
+                    _enemies[j].Health -= 1;
+                    _bullets.RemoveAt(i);
 
+                    if (_enemies[j].Health <= 0)
+                    {
+                        _enemies.RemoveAt(j);
+                        _score += 1;
+                        _player.InkCounter += 10;
+                    }
+
+                    break;
+                }
+            }
+        }
+        for (int i = _enemies.Count - 1; i >= 0; i--)
+        {
+            bool enemyHitBarrier = false;
+
+            for (int j = _barriers.Count - 1; j >= 0; j--)
+            {
+                for (int k = _barriers[j].Parts.Count - 1; k >= 0; k--)
+                {
+                    if (_enemies[i].GetBounds().Intersects(_barriers[j].Parts[k].Bounds))
+                    {
+                        _barriers[j].Parts[k].Health -= 1;
+                        _enemies.RemoveAt(i);
+                        enemyHitBarrier = true;
+
+                        if (_barriers[j].Parts[k].Health <= 0)
+                        {
+                            _barriers[j].Parts.RemoveAt(k);
+                        }
+
+                        break;
+                    }
+                }
+
+                if (enemyHitBarrier)
+                {
+                    break;
+                }
+            }
+        }
+
+        for (int i = _enemies.Count - 1; i >= 0; i--)
+        {
+            if (_enemies[i].GetBounds().Intersects(_player.GetBounds()))
+            {
+                _player.Health -= 1;
+                _enemies.RemoveAt(i);
+            }
+        }
         foreach (var b in _barriers)
         {
             b.Update(gameTime);
         }
         
+        foreach (var enemy in _enemies)
+        {
+            enemy.Update(dt);
+        }
+        
+        
+        if (_enemySpawnTimer.Update(dt) && !_timer.IsPaused)
+        {
+            Random rand = new Random();
+
+            int side = rand.Next(4);
+            Vector2 spawnPos = Vector2.Zero;
+
+            if (side == 0) // top
+                spawnPos = new Vector2(rand.Next(_graphics.PreferredBackBufferWidth), 0);
+            else if (side == 1) // bottom
+                spawnPos = new Vector2(rand.Next(_graphics.PreferredBackBufferWidth), _graphics.PreferredBackBufferHeight);
+            else if (side == 2) // left
+                spawnPos = new Vector2(0, rand.Next(_graphics.PreferredBackBufferHeight));
+            else // right
+                spawnPos = new Vector2(_graphics.PreferredBackBufferWidth, rand.Next(_graphics.PreferredBackBufferHeight));
+
+            Enemy enemy = new Enemy(spawnPos, _enemyTexture, 100f, 3, _player);
+            _enemies.Add(enemy);
+        }
         
         _timer.Update(dt);
         base.Update(gameTime);
@@ -144,8 +236,10 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
-        _spriteBatch.DrawString(_font, _timer.TimeElapsed.ToString("0.00"), new Vector2(10, 10), Color.White);
-        _spriteBatch.DrawString(_font, (_player.InkCounter/10).ToString(), new Vector2(140, 10), Color.White);
+        _spriteBatch.DrawString(_font, "Time: " + _timer.TimeElapsed.ToString("0.00"), new Vector2(10, 10), Color.White);
+        _spriteBatch.DrawString(_font, "Score: " + _score.ToString(), new Vector2(10, 40), Color.White);
+        _spriteBatch.DrawString(_font, "Ink: " + _player.InkCounter.ToString(), new Vector2(10, 70), Color.White);
+        _spriteBatch.DrawString(_font, "Health: " + _player.Health.ToString(), new Vector2(10, 100), Color.White);
         foreach (var b in _bullets)
         {
             _spriteBatch.Draw(
@@ -156,6 +250,20 @@ public class Game1 : Game
                 0f,
                 Vector2.Zero,
                 0.01f,
+                SpriteEffects.None,
+                0f
+            );
+        }
+        foreach (var enemy in _enemies)
+        {
+            _spriteBatch.Draw(
+                enemy.Sprite,
+                enemy.Position,
+                null,
+                Color.White,
+                0f,
+                new Vector2(enemy.Sprite.Width / 2, enemy.Sprite.Height / 2),
+                0.02f,
                 SpriteEffects.None,
                 0f
             );
