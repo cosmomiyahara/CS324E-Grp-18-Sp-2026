@@ -17,8 +17,6 @@ public class Vine
     private MouseState _lastMouseState;
     private float _scale;
     private float _linkSpacing;
-    private float _ks = 0.013f;
-    private float _kd = 0.22f;
     private bool _adding = true;
     private VineLink _lastLink;
     
